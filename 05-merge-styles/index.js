@@ -17,5 +17,3 @@ fs.readdir(path.join(__dirname, 'styles'), {withFileTypes: true}, (err, files) =
     }
   })
 })
-
-// node 05-merge-styles
