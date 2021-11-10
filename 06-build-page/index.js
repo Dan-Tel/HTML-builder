@@ -43,23 +43,17 @@ fs.readdir(path.join(__dirname, 'styles'), {withFileTypes: true}, (err, files) =
 })
 
 //Assets to Project-dist/assets
-fs.mkdir(path.join(__dirname, 'project-dist', 'assets'), {recursive: true}, (err) => {
-  if (err) throw err;
-});
+fs.rm(path.join(__dirname, 'project-dist', 'assets'), { recursive: true, force: true }, (err) => {
+  fs.mkdir(path.join(__dirname, 'project-dist', 'assets'), {recursive: true}, (err) => {
+    if (err) throw err;
+  });
 
-fs.readdir(path.join(__dirname, 'assets'), {withFileTypes: true}, (err, dirs) => {
-  dirs.forEach(dir => {
-
-    fs.mkdir(path.join(__dirname, 'project-dist', 'assets', dir.name), {recursive: true}, (err) => {
-      if (err) throw err;
-
-      fs.readdir(path.join(__dirname, 'project-dist', 'assets', dir.name), {withFileTypes: true}, (err, files) => {
-        files.forEach(file => {
-          fs.unlink(path.join(__dirname, 'project-dist', 'assets', dir.name, file.name), (err) => {
-            if (err) throw err;
-          })
-        })
-    
+  fs.readdir(path.join(__dirname, 'assets'), {withFileTypes: true}, (err, dirs) => {
+    dirs.forEach(dir => {
+  
+      fs.mkdir(path.join(__dirname, 'project-dist', 'assets', dir.name), {recursive: true}, (err) => {
+        if (err) throw err;
+  
         fs.readdir(path.join(__dirname, 'assets', dir.name), {withFileTypes: true}, (err, files) => {
           files.forEach(file => {
             fs.copyFile(path.join(__dirname, 'assets', dir.name, file.name), path.join(__dirname, 'project-dist', 'assets', dir.name, file.name), (err) => {
@@ -70,4 +64,4 @@ fs.readdir(path.join(__dirname, 'assets'), {withFileTypes: true}, (err, dirs) =>
       })
     })
   })
-})
+});
